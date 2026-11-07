@@ -7,20 +7,21 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://api.telegra.ph; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="description" content="Follow published lyrics as they change, without refreshing the page.">
   <title>Lyrics Live</title>
-  <link rel="stylesheet" href="styles.css?v=2">
-  <script type="module" src="viewer.mjs?v=2"></script>
+  <link rel="stylesheet" href="styles.css?v=3">
+  <script type="module" src="viewer.mjs?v=3"></script>
 </head>
-<body>
-  <header>
-    <a class="brand" href="./">Lyrics Live</a>
-    <span id="status" role="status" aria-live="polite">Connecting…</span>
-  </header>
+<body data-view="page">
   <main>
     <article id="lyrics" aria-busy="true">
-      <p class="eyebrow">Now published</p>
-      <h1 id="song-title">Loading lyrics…</h1>
+      <div class="title-row">
+        <h1 id="song-title">Loading lyrics…</h1>
+        <button id="view-toggle" type="button" aria-controls="song-text">Scrolling view</button>
+      </div>
       <div id="song-text"></div>
-      <footer><a id="source" target="_blank" rel="noopener noreferrer">Read on Telegraph ↗</a></footer>
+      <footer>
+        <a id="source" target="_blank" rel="noopener noreferrer">Telegraph ↗</a>
+        <span id="status" role="status" aria-live="polite">Connecting…</span>
+      </footer>
     </article>
     <p id="notice" role="status" hidden></p>
     <noscript>Enable JavaScript to see the lyrics and follow new publications automatically.</noscript>

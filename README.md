@@ -47,6 +47,18 @@ in the APK or the public repository.
 
 ## Behavior
 
+- On wider screens, the default view fits all stanzas on one page in multiple
+  columns. Stanzas stay together and flow down each column before continuing to
+  the next. Font size adjusts to the available screen space when lyrics or the
+  window size change.
+- **Scrolling view** switches to the previous large-text, single-column reading
+  layout. **Fit page** switches back. The selection stays in effect for the tab
+  when another song is published; a new page load defaults to fitting the page.
+- Mobile screens, including touch phones in landscape, always use one readable
+  scrolling column. The desktop view switch is hidden on mobile.
+- The song title is small and aligned at the top left. There is no brand header
+  or "Now published" banner; connection status and the source link sit below the
+  lyrics.
 - Displays Unicode lyrics with original line breaks and spacing between stanzas.
 - Treats published lyrics as text; remote scripts, markup, and embeds never execute.
 - Keeps the last lyrics visible on connection errors, retries with increasing

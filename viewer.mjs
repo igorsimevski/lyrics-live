@@ -1,10 +1,29 @@
 import { fetchPage, FIXED_PAGE_PATH } from './telegraph.mjs?v=2';
 import { followPage } from './follower.mjs';
+import { fitPage } from './fit-page.mjs?v=3';
 
 const element = id => document.getElementById(id);
 const statusLabels = { connecting: 'Connecting…', live: 'Live · updates automatically', retry: 'Reconnecting…', paused: 'Paused' };
 let stop;
 let renderedSignature;
+let isScrolling = false;
+let layoutFrame;
+const mobile = window.matchMedia('(max-width: 640px), (hover: none) and (pointer: coarse)');
+
+function layout() {
+  const isPage = !isScrolling && !mobile.matches;
+  document.body.dataset.view = isPage ? 'page' : 'scroll';
+  const content = element('song-text');
+  content.style.removeProperty('column-count');
+  content.style.removeProperty('font-size');
+  element('view-toggle').textContent = isPage ? 'Scrolling view' : 'Fit page';
+  if (isPage) fitPage(content);
+}
+
+function scheduleLayout() {
+  cancelAnimationFrame(layoutFrame);
+  layoutFrame = requestAnimationFrame(layout);
+}
 
 function status(state) {
   element('status').textContent = statusLabels[state];
@@ -27,6 +46,7 @@ function show(page) {
     return paragraph;
   });
   element('song-text').replaceChildren(...stanzas);
+  scheduleLayout();
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
@@ -42,4 +62,13 @@ window.addEventListener('hashchange', start);
 document.addEventListener('visibilitychange', start);
 window.addEventListener('pagehide', () => stop?.());
 window.addEventListener('pageshow', event => { if (event.persisted) start(); });
+element('view-toggle').addEventListener('click', () => {
+  isScrolling = !isScrolling;
+  scheduleLayout();
+  window.scrollTo({ top: 0, behavior: 'instant' });
+});
+window.addEventListener('resize', scheduleLayout);
+new ResizeObserver(scheduleLayout).observe(element('song-text'));
+document.fonts.ready.then(scheduleLayout);
+layout();
 start();
