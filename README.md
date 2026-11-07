@@ -5,44 +5,45 @@ Publish still overwrites the same Telegraph page. This viewer checks that public
 page every three seconds and replaces the displayed song when its title or lyrics
 change, without reloading the browser. Unchanged lyrics keep their scroll position.
 
-No backend, database, account, build step, or npm dependencies are needed. Only the
-public Telegraph page path appears in the viewer link, after `#`. The app's private
-Telegraph access token must never be included in the viewer or its repository.
+The public link is always **https://igorsimevski.github.io/lyrics-live**. No anchor,
+query parameter, sign-in, or page selection is needed. GitHub redirects the
+address to its directory URL with a trailing slash.
 
-## Hosting on GitHub Pages
+The fixed source is https://telegra.ph/YouTube-MP3-lyrics-11-01. `FIXED_PAGE_PATH`
+in `telegraph.mjs` and `LyricsPage.TELEGRAPH_PATH` in the Android app identify that
+same page. Older viewer bookmarks containing an anchor normalize to this fixed
+source and remove the anchor. Visitors cannot select another page through the URL.
+
+No backend, database, account, build step, or npm dependencies are needed. The
+app's private Telegraph access token must never be included in the viewer or its
+repository.
+
+## Hosting and Android connection
 
 Source repository: https://github.com/igorsimevski/lyrics-live
 
-Public viewer address: https://igorsimevski.github.io/lyrics-live/
-(requires Pages to be enabled on `main`, `/ (root)`).
+GitHub Pages serves `main`, `/ (root)`, using **Deploy from a branch** in the
+repository's **Settings → Pages**. Put this directory's contents at the root of
+that repository to publish an update.
 
-1. Put this directory's contents at the root of the new GitHub repository.
-2. In the repository's **Settings → Pages**, choose **Deploy from a branch**,
-   then select `main` and `/ (root)`.
-3. Wait for Pages to report its HTTPS address, normally
-   `https://igorsimevski.github.io/lyrics-live/`.
-4. Build the Android app using that verified address:
+The Android app defaults to the fixed viewer link. Build normally:
 
-   ```sh
-   cd android
-   ./gradlew :app:assembleDebug -PlyricsViewerUrl=https://igorsimevski.github.io/lyrics-live/
-   ```
+```sh
+cd android
+./gradlew :app:assembleDebug
+```
 
-   This is also the Android build's default viewer address. Set `lyricsViewerUrl`
-   in your local Gradle user properties to use a different HTTPS host. An explicit
-   `-PlyricsViewerUrl=` shares the original Telegraph link, which needs a manual
-   browser refresh.
+**QR code**, **Copy link**, and the published-link message all share the same
+bare address. `lyricsViewerUrl` can override the HTTPS viewer host; an explicitly
+empty `-PlyricsViewerUrl=` shares the original Telegraph URL for manual refresh.
 
-The app's **QR code**, **Copy link**, and published-link message use the configured
-viewer address. Existing stored Telegraph pages are reused; no migration or new
-page is needed. An old Telegraph link can also be pasted into the viewer's welcome
-screen. An already-open native Telegraph page still needs to be refreshed or
-replaced with its Lyrics Live link.
-
-For example, `https://igorsimevski.github.io/lyrics-live/#Lyrics-11-01` follows
-`https://telegra.ph/Lyrics-11-01`. The link stays the same when another song is
-published. Pages hosting must allow public, anonymous browser access for the QR
-code to work on another phone.
+Publishing reuses the existing shared page's credentials in the app's private
+preferences. It never creates another page. An installation without those
+credentials, or configured for another Telegraph page, reports an error instead
+of publishing lyrics that the fixed viewer would not display. Preserve the
+existing installation's app data when updating; a fresh installation needs the
+shared page's publishing credentials provisioned privately. They are not bundled
+in the APK or the public repository.
 
 ## Behavior
 

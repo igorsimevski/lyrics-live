@@ -2,20 +2,13 @@ const MAX_PATH_LENGTH = 256;
 const MAX_NODES = 10_000;
 const MAX_TEXT_LENGTH = 100_000;
 const MAX_DEPTH = 20;
+export const FIXED_PAGE_PATH = 'YouTube-MP3-lyrics-11-01';
 
 export function pagePath(value) {
   if (!value || value.length > MAX_PATH_LENGTH || !/^[\p{L}\p{M}\p{N}_-]+$/u.test(value)) {
     throw new Error('Use a valid Telegraph page link.');
   }
   return value;
-}
-
-export function pathFromLink(value) {
-  const link = new URL(value);
-  if (link.origin !== 'https://telegra.ph' || link.username || link.password || link.search || link.hash) {
-    throw new Error('Use a link beginning with https://telegra.ph/.');
-  }
-  return pagePath(decodeURIComponent(link.pathname.slice(1)));
 }
 
 // Only text and line breaks reach the viewer. Remote HTML, links and embeds never become DOM.

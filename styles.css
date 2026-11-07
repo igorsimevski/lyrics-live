@@ -11,15 +11,7 @@ a { color: #6650a5; text-underline-offset: .2em; }
 main { max-width: 48rem; margin: 0 auto; padding: 3.5rem 2rem; }
 .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: .72rem; font-weight: 650; color: #776388; margin-bottom: 1.2rem; }
 h1 { font-size: clamp(2rem, 6vw, 3.5rem); letter-spacing: -.045em; line-height: 1.15; margin: 0 0 2rem; overflow-wrap: anywhere; }
-#welcome > p:not(.eyebrow) { color: #67616e; font-size: 1.15rem; line-height: 1.65; }
-form { margin-top: 3rem; }
-label { display: block; margin-bottom: .75rem; font-size: .9rem; font-weight: 600; }
-.input-row { display: flex; gap: .5rem; }
-input, button { font: inherit; border-radius: .5rem; padding: .8rem 1rem; min-height: 3rem; }
-input { width: 100%; min-width: 0; border: 1px solid #bcb4c4; background: transparent; color: inherit; }
-button { border: 1px solid #6650a5; background: #6650a5; color: white; font-weight: 600; cursor: pointer; }
 :focus-visible { outline: 3px solid #9d82dc; outline-offset: 3px; }
-#form-error { color: #a12e40; font-size: .9rem; }
 #song-text { font-size: clamp(1.2rem, 3vw, 1.6rem); line-height: 1.65; overflow-wrap: anywhere; }
 #song-text p { white-space: pre-wrap; margin: 0 0 1.5em; }
 footer { margin-top: 3rem; font-size: .85rem; }
@@ -28,7 +20,6 @@ footer { margin-top: 3rem; font-size: .85rem; }
 @media (prefers-color-scheme: dark) {
   :root { color: #f2edf7; background: #19171e; }
   header { border-color: #3d3745; }
-  #status, #notice, #welcome > p:not(.eyebrow) { color: #c4bacc; }
+  #status, #notice { color: #c4bacc; }
   a, .eyebrow { color: #bba4ef; }
-  #form-error { color: #ff9eab; }
 }

@@ -1,16 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { fetchPage, lyricsText, pagePath, pathFromLink } from '../telegraph.mjs';
+import { fetchPage, FIXED_PAGE_PATH, lyricsText, pagePath } from '../telegraph.mjs';
 
-test('accepts only a public Telegraph page path or HTTPS link', () => {
-  assert.equal(pathFromLink('https://telegra.ph/Lyrics-11-01'), 'Lyrics-11-01');
-  assert.equal(pathFromLink('https://telegra.ph/%D0%9F%D0%B5%D1%81%D0%BD%D0%B0-11-01'), 'Песна-11-01');
+test('accepts the fixed public Telegraph page path and rejects unsafe paths', () => {
+  assert.equal(pagePath(FIXED_PAGE_PATH), 'YouTube-MP3-lyrics-11-01');
+  assert.equal(pagePath('Песна-11-01'), 'Песна-11-01');
   for (const value of ['', 'a'.repeat(257), '../createAccount', 'x/y', 'x?token=secret', 'x#y', 'x y', 'x%2fy']) {
     assert.throws(() => pagePath(value));
-  }
-  for (const value of ['http://telegra.ph/Lyrics', 'https://example.com/Lyrics', 'https://telegra.ph.evil.com/Lyrics',
-    'https://secret@telegra.ph/Lyrics', 'https://telegra.ph/Lyrics?access_token=secret', 'https://telegra.ph/Lyrics#x', 'invalid']) {
-    assert.throws(() => pathFromLink(value));
   }
 });
 
@@ -34,13 +30,13 @@ test('rejects malformed and oversized page content', () => {
 });
 
 test('reads only public data, bypasses caches, and returns plain lyrics', async () => {
-  const page = await fetchPage('Lyrics-11-01', async (url, options) => {
-    assert.equal(url, 'https://api.telegra.ph/getPage/Lyrics-11-01?return_content=true');
+  const page = await fetchPage(FIXED_PAGE_PATH, async (url, options) => {
+    assert.equal(url, 'https://api.telegra.ph/getPage/YouTube-MP3-lyrics-11-01?return_content=true');
     assert.equal(options.cache, 'no-store');
     assert.equal(options.credentials, 'omit');
     assert.equal(options.referrerPolicy, 'no-referrer');
     assert.ok(options.signal instanceof AbortSignal);
-    return { ok: true, json: async () => ({ ok: true, result: { path: 'Lyrics-11-01', title: 'Песна', content: [{ tag: 'p', children: ['Строфа'] }] } }) };
+    return { ok: true, json: async () => ({ ok: true, result: { path: FIXED_PAGE_PATH, title: 'Песна', content: [{ tag: 'p', children: ['Строфа'] }] } }) };
   });
   assert.deepEqual(page, { title: 'Песна', text: 'Строфа' });
 });
