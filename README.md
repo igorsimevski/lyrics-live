@@ -28,9 +28,10 @@ Public viewer address: https://igorsimevski.github.io/lyrics-live/
    ./gradlew :app:assembleDebug -PlyricsViewerUrl=https://igorsimevski.github.io/lyrics-live/
    ```
 
-   Alternatively set `lyricsViewerUrl=https://igorsimevski.github.io/lyrics-live/` in
-   your local Gradle user properties. Builds without this setting continue to
-   share the original Telegraph link, which needs a manual browser refresh.
+   This is also the Android build's default viewer address. Set `lyricsViewerUrl`
+   in your local Gradle user properties to use a different HTTPS host. An explicit
+   `-PlyricsViewerUrl=` shares the original Telegraph link, which needs a manual
+   browser refresh.
 
 The app's **QR code**, **Copy link**, and published-link message use the configured
 viewer address. Existing stored Telegraph pages are reused; no migration or new
