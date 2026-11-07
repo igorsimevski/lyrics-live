@@ -19,12 +19,15 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 body[data-view="page"] main { height: 100dvh; display: flex; flex-direction: column; }
 body[data-view="page"] article { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 body[data-view="page"] #song-text { flex: 1; min-height: 0; column-fill: balance; column-gap: 28px; font-size: 20px; line-height: 1.35; }
-body[data-view="scroll"] main { max-width: 48rem; margin: 0 auto; padding: 16px 2rem 2rem; }
+body[data-view="scroll"] main { max-width: 48rem; margin: 0 auto; padding: 16px 2rem 88px; }
 body[data-view="scroll"] #song-text { font-size: clamp(1.2rem, 3vw, 1.6rem); line-height: 1.65; }
 body[data-view="scroll"] #song-text p { margin-bottom: 1.5em; }
 body[data-view="scroll"] footer { margin-top: 3rem; }
+#autoscroll-toggle { position: fixed; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 2; min-height: 44px; background: #faf8f4; box-shadow: 0 2px 12px #26232d20; }
+#autoscroll-toggle[aria-pressed="true"] { background: #6650a5; color: #fff; border-color: #6650a5; }
+#autoscroll-toggle:disabled { opacity: .5; cursor: default; }
 @media (max-width: 640px), (hover: none) and (pointer: coarse) {
-  body[data-view="scroll"] main { padding: 12px 16px 24px; }
+  body[data-view="scroll"] main { padding: 12px 16px 88px; }
   #view-toggle { display: none; }
   .title-row { margin-bottom: 1.25rem; }
   footer { flex-wrap: wrap; }
@@ -35,4 +38,6 @@ body[data-view="scroll"] footer { margin-top: 3rem; }
   a { color: #bba4ef; }
   button { border-color: #5a5067; }
   button:hover { background: #302939; }
+  #autoscroll-toggle { background: #19171e; }
+  #autoscroll-toggle[aria-pressed="true"] { background: #6650a5; }
 }

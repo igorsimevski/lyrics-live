@@ -7,8 +7,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://api.telegra.ph; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="description" content="Follow published lyrics as they change, without refreshing the page.">
   <title>Lyrics Live</title>
-  <link rel="stylesheet" href="styles.css?v=3">
-  <script type="module" src="viewer.mjs?v=3"></script>
+  <link rel="stylesheet" href="styles.css?v=4">
+  <script type="module" src="viewer.mjs?v=4"></script>
 </head>
 <body data-view="page">
   <main>
@@ -24,6 +24,7 @@
       </footer>
     </article>
     <p id="notice" role="status" hidden></p>
+    <button id="autoscroll-toggle" type="button" aria-controls="song-text" aria-pressed="false" hidden>Autoscroll</button>
     <noscript>Enable JavaScript to see the lyrics and follow new publications automatically.</noscript>
   </main>
 </body>

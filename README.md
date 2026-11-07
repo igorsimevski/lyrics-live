@@ -56,6 +56,11 @@ in the APK or the public repository.
   when another song is published; a new page load defaults to fitting the page.
 - Mobile screens, including touch phones in landscape, always use one readable
   scrolling column. The desktop view switch is hidden on mobile.
+- **Autoscroll**, available only in scrolling view (including mobile), starts a
+  slow downward scroll at 12 pixels per second from the current position. The
+  floating **Stop autoscroll** button stays visible. Scrolling stops at the bottom,
+  on manual scrolling or touch, when switching to Fit page, when the tab is hidden,
+  or when new lyrics arrive. It never starts automatically.
 - The song title is small and aligned at the top left. There is no brand header
   or "Now published" banner; connection status and the source link sit below the
   lyrics.
@@ -80,4 +85,5 @@ node --test tests/*.test.mjs
 The tests use fake HTTP responses and a fake scheduler; they never publish lyrics
 or contact Telegraph. They cover replacement after another publication, unchanged
 content, bounded retry/recovery, stopped in-flight work, safe text extraction,
-Unicode, malformed content, and public-only request construction.
+Unicode, malformed content, public-only request construction, slow autoscroll,
+start/stop/resume, bottom detection, and cancellation of scheduled frames.
